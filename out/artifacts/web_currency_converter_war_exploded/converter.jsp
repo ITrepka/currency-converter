@@ -35,7 +35,7 @@
         .form {
             width: 200px;
             height: auto;
-            font-size: 14px;
+            font-size: 16px;
             padding: 10px;
             margin-bottom: 40px;
         }
@@ -61,6 +61,11 @@
             margin-bottom: 30px;
         }
 
+        .add-currency {
+            width: 20%;
+            padding: 40px;
+        }
+
     </style>
 </head>
 <body>
@@ -70,41 +75,66 @@
     String currency1 = null;
     String currency2 = null;
     if (request.getParameter("amount") != null &&
+            request.getParameter("amount").length() > 0 &&
             request.getParameter("currency1") != null &&
             request.getParameter("currency2") != null) {
         amount = Double.valueOf(request.getParameter("amount"));
         currency1 = request.getParameter("currency1");
         currency2 = request.getParameter("currency2");
     }
+    if (request.getParameter("currencyName") != null && request.getParameter("currencyValue") != null &&
+            request.getParameter("currencyName").length() > 0 && request.getParameter("currencyValue").length() > 0) {
+        String currencyName = request.getParameter("currencyName");
+        Double currencyValue = Double.valueOf(request.getParameter("currencyValue"));
+        CurrencyService.currencies.put(currencyName, currencyValue);
+    }
 %>
 <h1>Currency Converter</h1>
 <form class="form" method="get" action="converter.jsp">
     <b>Kwota:</b>
-    <input name="amount" type="number">
+    <input name="amount" type="number" <%if (amount != null) {%> value="<%=amount%>" <%}%>>
     <b>Waluta podanej kwoty:</b>
     <select name="currency1">
-        <option value="eur" selected="selected">EURO</option>
-        <option value="pln">PLN</option>
-        <option value="gbp">GBP</option>
-        <option value="usd">USD</option>
+        <%
+            for (Map.Entry<String, Double> entry : CurrencyService.currencies.entrySet()) { %>
+        <option value="<%=entry.getKey()%>"
+                <%if (request.getParameter("currency1") != null && currency1.equals(entry.getKey())) {%>selected="selected"
+                <%}%>><%=entry.getKey().toUpperCase()%>
+        </option>
+        <%
+            }
+        %>
     </select>
     <b>Waluta na jaką chcesz przeliczyć:</b>
     <select name="currency2">
-        <option value="eur" selected="selected">EURO</option>
-        <option value="pln">PLN</option>
-        <option value="gbp">GPG</option>
-        <option value="usd">USD</option>
+        <%
+            for (Map.Entry<String, Double> entry : CurrencyService.currencies.entrySet()) { %>
+        <option value="<%=entry.getKey()%>"
+                <%if (request.getParameter("currency2") != null && currency2.equals(entry.getKey())) {%>selected="selected"
+                <%}%>><%=entry.getKey().toUpperCase()%>
+        </option>
+        <%
+            }
+        %>
     </select>
     <input value="convert" type="submit">
 </form>
 <div class="result">
     <%if (amount != null) {%>
     <%=
-        amount + " " + currency1 + " = "
+    amount + " " + currency1 + " = "
     %>
     <%=String.format("%.2f", CurrencyService.convert(amount, currency1, currency2))%>
     <%=currency2%>
     <%}%>
 </div>
+
+<form method="get" action="converter.jsp" class="add-currency">
+    <b>Currency Name</b>
+    <input type="text" name="currencyName">
+    <b>Currency Value</b>
+    <input type="number" name="currencyValue">
+    <input type="submit" value="Add Currency">
+</form>
 </body>
 </html>
