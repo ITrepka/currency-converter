@@ -11,68 +11,7 @@
 <html>
 <head>
     <title>Title</title>
-    <style>
-        body {
-            background-color: gainsboro;
-        }
-
-        h1 {
-            text-align: center;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-        form, div {
-            background-color: #068de9;
-            border: 5px solid #2270ff;
-            margin: auto;
-            color: white;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .form {
-            width: 200px;
-            height: auto;
-            font-size: 16px;
-            padding: 10px;
-            margin-bottom: 40px;
-        }
-
-        .result {
-            width: 60%;
-            font-size: 30px;
-            padding: 20px;
-        }
-
-        select {
-            display: block;
-            margin-bottom: 30px;
-            width: 100%;
-        }
-
-        input {
-            width: 100%;
-            margin-bottom: 30px;
-        }
-
-        b {
-            margin-bottom: 30px;
-        }
-
-        .add-currency {
-            width: 15%;
-            position: absolute;
-            top: 50px;
-            left: 50px;
-            padding: 10px;
-        }
-
-        h2 {
-            margin-top: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css" type="text/css">
 </head>
 <body>
 
