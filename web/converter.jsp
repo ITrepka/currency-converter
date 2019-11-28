@@ -1,6 +1,6 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="service.CurrencyService" %><%--
+<%@ page import="currency.app.service.CurrencyService" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 27.11.2019
@@ -62,10 +62,16 @@
         }
 
         .add-currency {
-            width: 20%;
-            padding: 40px;
+            width: 15%;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            padding: 10px;
         }
 
+        h2 {
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -82,10 +88,12 @@
         currency1 = request.getParameter("currency1");
         currency2 = request.getParameter("currency2");
     }
+    String currencyName = null;
+    Double currencyValue = null;
     if (request.getParameter("currencyName") != null && request.getParameter("currencyValue") != null &&
             request.getParameter("currencyName").length() > 0 && request.getParameter("currencyValue").length() > 0) {
-        String currencyName = request.getParameter("currencyName");
-        Double currencyValue = Double.valueOf(request.getParameter("currencyValue"));
+        currencyName = request.getParameter("currencyName");
+        currencyValue = Double.valueOf(request.getParameter("currencyValue"));
         CurrencyService.currencies.put(currencyName, currencyValue);
     }
 %>
@@ -119,21 +127,22 @@
     </select>
     <input value="convert" type="submit">
 </form>
-<div class="result">
     <%if (amount != null) {%>
+<div class="result">
     <%=
     amount + " " + currency1 + " = "
     %>
     <%=String.format("%.2f", CurrencyService.convert(amount, currency1, currency2))%>
     <%=currency2%>
-    <%}%>
 </div>
+    <%}%>
 
 <form method="get" action="converter.jsp" class="add-currency">
+    <h2>Add New Currency</h2>
     <b>Currency Name</b>
-    <input type="text" name="currencyName">
+    <input type="text" name="currencyName" <%if (request.getParameter("currencyName") != null) {%> value="<%=currencyName%>" <%}%>>
     <b>Currency Value</b>
-    <input type="number" name="currencyValue">
+    <input type="number" name="currencyValue" <%if (request.getParameter("currencyValue") != null) {%> value="<%=currencyValue%>" <%}%>>
     <input type="submit" value="Add Currency">
 </form>
 </body>
