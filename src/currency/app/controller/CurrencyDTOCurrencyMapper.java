@@ -1,5 +1,6 @@
 package currency.app.controller;
 
+import currency.app.model.Currency;
 import nbp.api.model.Currency;
 
 import java.util.ArrayList;

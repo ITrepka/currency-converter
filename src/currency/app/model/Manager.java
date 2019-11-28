@@ -3,10 +3,10 @@ package currency.app.model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import nbp.api.controller.ConnectionFactory;
-import nbp.api.controller.CurrencyDAO;
-import nbp.api.controller.CurrencyDTO;
-import nbp.api.controller.CurrencyDTOCurrencyMapper;
+import currency.app.controller.ConnectionFactory;
+import currency.app.controller.CurrencyDAO;
+import currency.app.controller.CurrencyDTO;
+import currency.app.controller.CurrencyDTOCurrencyMapper;
 
 import java.io.IOException;
 import java.sql.Connection;
