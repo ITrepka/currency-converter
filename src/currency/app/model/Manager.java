@@ -72,7 +72,7 @@ public class Manager {
         return currencyDAO.getSpecifiedCurrencyHistory(currencies.get(currencyChoice - 1));
     }
 
-    private void saveCurrenciesToDatabase() throws UnirestException, IOException, SQLException {
+    public void saveCurrenciesToDatabase() throws UnirestException, IOException, SQLException {
         String response = readJSonFromNBPApi();
         CurrencyDTO[] currencyDTOS = mapJSonToCurrencyDTO(response);
 

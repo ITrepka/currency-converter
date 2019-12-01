@@ -9,12 +9,15 @@
 <html>
 <head>
     <title>Menu-Converter</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css" type="text/css">
 </head>
 <body>
-    <h1>MENU</h1>
-    <ul>
-        <li>Show exchange rates history for specified currency</li>
-        <li><a href="converter.jsp>">Currency converter</a></li>
+<div class="container-menu">
+    <h1 class="menu-header">MENU</h1>
+    <ul class="menu-list">
+        <a href="controllerServlet?ratesHistory=1>"><li id="rates-history-button">CURRENCY RATES HISTORY</li></a>
+        <a href="controllerServlet?converter=1>"><li id="converter-button">CURRENCY CONVERTER</li></a>
     </ul>
+</div>
 </body>
 </html>
