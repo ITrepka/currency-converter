@@ -81,7 +81,6 @@ public class Manager {
             List<Currency> dailyCurrencyList = mapper.map(currencyDTOS[i]);
             saveToDatabase(dailyCurrencyList);
         }
-
     }
 
     private CurrencyDTO[] mapJSonToCurrencyDTO(String response) throws IOException {

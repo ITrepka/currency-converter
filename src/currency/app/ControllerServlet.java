@@ -17,7 +17,7 @@ public class ControllerServlet extends HttpServlet {
         String converter = req.getParameter("converter");
         if (ratesHistory != null || converter != null) {
             Manager manager = new Manager();
-            manager.
+//            manager.
         }
     }
 }

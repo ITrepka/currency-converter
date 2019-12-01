@@ -15,8 +15,8 @@
 <div class="container-menu">
     <h1 class="menu-header">MENU</h1>
     <ul class="menu-list">
-        <a href="controllerServlet?ratesHistory=1>"><li id="rates-history-button">CURRENCY RATES HISTORY</li></a>
-        <a href="controllerServlet?converter=1>"><li id="converter-button">CURRENCY CONVERTER</li></a>
+        <a id="rates-history-button" href="controllerServlet?ratesHistory=1>"><li>CURRENCY RATES HISTORY</li></a>
+        <a id="converter-button" href="controllerServlet?converter=1>"><li>CURRENCY CONVERTER</li></a>
     </ul>
 </div>
 </body>
