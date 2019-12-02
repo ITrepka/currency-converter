@@ -18,10 +18,23 @@ import java.util.List;
 
 public class CurrencyService {
     public static List<Currency> dailyCurrencyList;
+    public static List<Currency> allHistory;
 
     static {
         //todo load last from database
         dailyCurrencyList = getLastWrittenCurrencies();
+        allHistory = getAllHistoryCurrenciesRates();
+    }
+
+    private static List<Currency> getAllHistoryCurrenciesRates() {
+        List<Currency> allCurrencies = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection()){
+            CurrencyDAO currencyDAO = new CurrencyDAO(conn);
+            allCurrencies = currencyDAO.findAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allCurrencies;
     }
 
     public static double convert(double amount, String code1, String code2) {
@@ -41,43 +54,13 @@ public class CurrencyService {
 
     private static List<Currency> getLastWrittenCurrencies(){
         List<Currency> lastWrittenCurrencies = new ArrayList<>();
-        try {
-            Connection conn = ConnectionFactory.getConnection();
+        try (Connection conn = ConnectionFactory.getConnection()){
             CurrencyDAO currencyDAO = new CurrencyDAO(conn);
             lastWrittenCurrencies = currencyDAO.getLastCurrencies();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return lastWrittenCurrencies;
-    }
-
-    private void showAllExchangeRatesForTheSelectedCurrency() throws SQLException {
-        Connection conn = ConnectionFactory.getConnection();
-        CurrencyDAO currencyDAO = new CurrencyDAO(conn);
-        List<String> currencies = currencyDAO.getCurrenciesList();
-//        screen.displayCurrencyList(currencies);
-//        int currencyChoice = screen.readInt();
-//        List<Currency> currencyHistory = handleCurrencyChoice(currencyChoice, currencies, currencyDAO);
-//        screen.displayCurrencyList(currencyHistory);
-        conn.close();
-    }
-
-    private void converter() throws SQLException {
-        Connection conn = ConnectionFactory.getConnection();
-        CurrencyDAO currencyDAO = new CurrencyDAO(conn);
-        List<String> currencies = currencyDAO.getCurrenciesList();
-//        screen.welcomeToConverter();
-//        double amount = screen.readDouble();
-//        int currencyForSaleChoice = screen.readCurrencyForSaleChoice(currencies);
-//        int currencyToBuyChoice = screen.readCurrencyToBuyChoice(currencies);
-        List<Currency> lastSavedCurrency = currencyDAO.getLastCurrencies();
-//        double result = calculate(lastSavedCurrency, currencyForSaleChoice, currencyToBuyChoice, amount);
-//        screen.displayResult(result);
-        conn.close();
-    }
-
-    private List<Currency> handleCurrencyChoice(int currencyChoice, List<String> currencies, CurrencyDAO currencyDAO) throws SQLException {
-        return currencyDAO.getSpecifiedCurrencyHistory(currencies.get(currencyChoice - 1));
     }
 
     public void saveCurrenciesToDatabase() {

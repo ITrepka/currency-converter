@@ -14,7 +14,7 @@ public class CurrencyDAO {
         this.conn = conn;
     } //ctrl + q , quick documentation
     public List<Currency> findAll() throws SQLException {
-        String sql = "select currency, code, bid,ask,trading_date, effective_date from currency";
+        String sql = "select * from currency";
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet resultSet = ps.executeQuery();
         String currency, code;
