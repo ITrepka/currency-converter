@@ -7,6 +7,11 @@
         <element id="directory" name="classes">
           <element id="module-output" name="web-currency-converter" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="com.mashape.unirest:unirest-java:1.4.9" />
+          <element id="library" level="project" name="mysql:mysql-connector-java:8.0.17" />
+          <element id="library" level="project" name="com.fasterxml.jackson.core:jackson-databind:2.8.3" />
+        </element>
       </element>
     </root>
   </artifact>

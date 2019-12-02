@@ -108,17 +108,20 @@ public class CurrencyDAO {
 //    }
 
 
-    public Currency create(Currency currency) throws SQLException {
-        String sql = "insert into currency(currency, code, bid, ask, trading_date, effective_date) values(?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, currency.getCurrency());
-        ps.setString(2, currency.getCode());
-        ps.setDouble(3, currency.getBid());
-        ps.setDouble(4, currency.getBid());
-        ps.setDate(5, Date.valueOf(currency.getTradingDate()));
-        ps.setDate(6, Date.valueOf(currency.getEffectiveDate()));
-
-        ps.executeUpdate();
+    public Currency create(Currency currency) {
+        try {
+            String sql = "insert into currency(currency, code, bid, ask, trading_date, effective_date) values(?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, currency.getCurrency());
+            ps.setString(2, currency.getCode());
+            ps.setDouble(3, currency.getBid());
+            ps.setDouble(4, currency.getBid());
+            ps.setDate(5, Date.valueOf(currency.getTradingDate()));
+            ps.setDate(6, Date.valueOf(currency.getEffectiveDate()));
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("duplicate currency");
+        }
 
         return new Currency(currency.getCurrency(), currency.getCode(), currency.getBid(),
                 currency.getAsk(), currency.getTradingDate(), currency.getEffectiveDate());

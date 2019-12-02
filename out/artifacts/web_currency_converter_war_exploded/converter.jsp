@@ -1,6 +1,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="currency.app.service.CurrencyService" %><%--
+<%@ page import="currency.app.service.CurrencyService" %>
+<%@ page import="currency.app.model.Currency" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 27.11.2019
@@ -16,6 +17,7 @@
 <body>
 
 <%
+    CurrencyService currencyService = new CurrencyService();
     Double amount = null;
     String currency1 = null;
     String currency2 = null;
@@ -27,14 +29,6 @@
         currency1 = request.getParameter("currency1");
         currency2 = request.getParameter("currency2");
     }
-    String currencyName = null;
-    Double currencyValue = null;
-    if (request.getParameter("currencyName") != null && request.getParameter("currencyValue") != null &&
-            request.getParameter("currencyName").length() > 0 && request.getParameter("currencyValue").length() > 0) {
-        currencyName = request.getParameter("currencyName");
-        currencyValue = Double.valueOf(request.getParameter("currencyValue"));
-        CurrencyService.currencies.put(currencyName, currencyValue);
-    }
 %>
 <h1>Currency Converter</h1>
 <form class="form" method="get" action="converter.jsp">
@@ -43,10 +37,10 @@
     <b>Waluta podanej kwoty:</b>
     <select name="currency1">
         <%
-            for (Map.Entry<String, Double> entry : CurrencyService.currencies.entrySet()) { %>
-        <option value="<%=entry.getKey()%>"
-                <%if (request.getParameter("currency1") != null && currency1.equals(entry.getKey())) {%>selected="selected"
-                <%}%>><%=entry.getKey().toUpperCase()%>
+            for (Currency currency : CurrencyService.dailyCurrencyList) { %>
+        <option value="<%=currency.getCode().toUpperCase()%>"
+                <%if (request.getParameter("currency1") != null && currency1.equals(currency.getCode())) {%>selected="selected"
+                <%}%>><%=currency.getCode().toUpperCase()%>
         </option>
         <%
             }
@@ -55,10 +49,10 @@
     <b>Waluta na jaką chcesz przeliczyć:</b>
     <select name="currency2">
         <%
-            for (Map.Entry<String, Double> entry : CurrencyService.currencies.entrySet()) { %>
-        <option value="<%=entry.getKey()%>"
-                <%if (request.getParameter("currency2") != null && currency2.equals(entry.getKey())) {%>selected="selected"
-                <%}%>><%=entry.getKey().toUpperCase()%>
+            for (Currency currency : CurrencyService.dailyCurrencyList) { %>
+        <option value="<%=currency.getCode().toUpperCase()%>"
+                <%if (request.getParameter("currency2") != null && currency2.equals(currency.getCode())) {%>selected="selected"
+                <%}%>><%=currency.getCode().toUpperCase()%>
         </option>
         <%
             }
@@ -75,14 +69,5 @@
     <%=currency2%>
 </div>
     <%}%>
-
-<form method="get" action="converter.jsp" class="add-currency">
-    <h2>Add New Currency</h2>
-    <b>Currency Name</b>
-    <input type="text" name="currencyName" <%if (request.getParameter("currencyName") != null) {%> value="<%=currencyName%>" <%}%>>
-    <b>Currency Value</b>
-    <input type="number" name="currencyValue" <%if (request.getParameter("currencyValue") != null) {%> value="<%=currencyValue%>" <%}%>>
-    <input type="submit" value="Add Currency">
-</form>
 </body>
 </html>

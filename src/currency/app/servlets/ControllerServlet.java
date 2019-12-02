@@ -1,6 +1,6 @@
-package currency.app;
+package currency.app.servlets;
 
-import currency.app.model.Manager;
+import currency.app.service.CurrencyService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +16,13 @@ public class ControllerServlet extends HttpServlet {
         String ratesHistory = req.getParameter("ratesHistory");
         String converter = req.getParameter("converter");
         if (ratesHistory != null || converter != null) {
-            Manager manager = new Manager();
-//            manager.
+            CurrencyService currencyService = new CurrencyService();
+            currencyService.saveCurrenciesToDatabase();
+        }
+        if ("1".equals(ratesHistory)) {
+            resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath() + "/rates-history.jsp"));
+        }else if ("1".equals(converter)) {
+            resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath() + "/converter.jsp"));
         }
     }
 }
